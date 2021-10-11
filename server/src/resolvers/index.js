@@ -1,6 +1,6 @@
-const tasksResovler = require("./getTaskResolver");
+const { taskMutations, taskQueries } = require("./taskResolvers");
 
-const resolvers = [tasksResovler];
+const resolvers = [taskQueries, taskMutations];
 
 module.exports = {
   resolvers,
