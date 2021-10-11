@@ -1,8 +1,9 @@
-const { gql } = require("apollo-server");
+const { gql } = require("apollo-server-express");
 
 const query = gql`
   type Query {
-    tasks: [Task]
+    tasks(userId: String!): [Task]
+    task(id: String!): Task
   }
 `;
 
