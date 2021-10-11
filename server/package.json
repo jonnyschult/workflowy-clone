@@ -6,11 +6,15 @@
   "scripts": {
     "build": "tsc -b .",
     "start": "node ./src/app.js",
-    "dev": "nodemon ./src/app.js"
+    "dev": "nodemon ./src/app.js",
+    "createDB": "node ./src/db/createDB",
+    "seed": "node ./src/db/seed"
   },
   "dependencies": {
-    "apollo-server": "^3.3.0",
+    "apollo-server-express-express": "^3.4.0",
+    "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
+    "express": "^4.17.1",
     "graphql": "^15.6.1",
     "pg": "^8.7.1",
     "uuid": "^8.3.2"
