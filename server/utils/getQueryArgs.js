@@ -1,8 +1,8 @@
-const getQueryArgs = (queryType, table, info, id) => {
+const getQueryArgs = (queryType, table, info) => {
   if (queryType === "update") {
-    if (info.id) {
-      delete info.id;
-    }
+    const id = info.id;
+
+    delete info.id;
 
     let valArray = [];
     let index = 1;
@@ -19,7 +19,7 @@ const getQueryArgs = (queryType, table, info, id) => {
       index++;
     }
 
-    let queryString = `UPDATE ${table} SET ${setString} WHERE id = ${id} RETURNING *`;
+    let queryString = `UPDATE ${table} SET ${setString} WHERE id = '${id}' RETURNING *`;
     return [queryString, valArray];
   }
 
