@@ -8,8 +8,8 @@ CREATE TABLE user_account(
     first_name varchar(30) NOT NULL,
     last_name varchar(30) NOT NULL,
     passwordhash varchar(300) NOT NULL,
-    created_at varchar(15) NOT NULL,
-    updated_at varchar(15) NOT NULL,
+    created_at VARCHAR(17) NOT NULL DEFAULT EXTRACT(epoch FROM now()),
+    updated_at VARCHAR(17) NOT NULL DEFAULT EXTRACT(epoch FROM now()),
     PRIMARY KEY (id)
 );
 
@@ -19,16 +19,15 @@ CREATE TABLE task(
     parent_id VARCHAR(36),
     priority INT DEFAULT 0,
     is_finished BOOLEAN,
-    created_at varchar(15) NOT NULL,
-    updated_at varchar(15) NOT NULL,
+    owner_id VARCHAR(36) REFERENCES user_account(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    created_at VARCHAR(17) NOT NULL DEFAULT EXTRACT(epoch FROM now()),
+    updated_at VARCHAR(17) NOT NULL DEFAULT EXTRACT(epoch FROM now()),
     PRIMARY KEY (id),
-    FOREIGN KEY (parent_id) REFERENCES task(id)
+    FOREIGN KEY (parent_id) REFERENCES task(id) ON DELETE CASCADE
 );
 
 CREATE TABLE user_task(
-    user_id VARCHAR(36) NOT NULL,
-    task_id VARCHAR(36) NOT NULL,
-    owner_id VARCHAR(36) NOT NULL,
+    user_id VARCHAR(36) REFERENCES user_account (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    task_id VARCHAR(36) REFERENCES task (id) ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT user_task_pkey PRIMARY KEY (user_id, task_id)
 );
-
