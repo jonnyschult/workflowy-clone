@@ -1,4 +1,4 @@
-const getQueryArgs = require("../../../utils/getQueryArgs");
+const { getQueryArgs, shareNewTask } = require("../../../utils/");
 const { v4: uuid } = require("uuid");
 
 const createTask = async (_, args, context) => {
@@ -17,9 +17,16 @@ const createTask = async (_, args, context) => {
       [user.id, task.id]
     );
 
-    if (root_task_id === undefined) {
-      //! TODO add auto share when user creates task which has been shared with them.
-      console.log("What's good, homie?");
+    //If the task is created in a shared task tree, the task is then associated with all users who have access to that task tree.
+    if (root_task_id !== undefined) {
+      const didShare = shareNewTask({
+        pool,
+        root_task_id,
+        new_task_id: task.id,
+      });
+      if (!didShare) {
+        throw "Task created, but failed to share it with other users.";
+      }
     }
 
     return {
@@ -119,7 +126,7 @@ const shareTask = async (_, args, context) => {
 
     return {
       success: true,
-      message: `User with ${email} has been add to the task.`,
+      message: `User with the ${email} email has been add to the task.`,
       tasks: null,
     };
   } catch (error) {
