@@ -5,14 +5,21 @@ const { typeDefs } = require("./typeDefs");
 const { resolvers } = require("./resolvers");
 const dotenv = require("dotenv");
 const http = require("http");
+const pool = require("./db/db");
+const getUser = require("./middlewares/getUser");
 dotenv.config();
 
-async function startApolloServer(typeDefs, resolvers) {
+const startApolloServer = async (typeDefs, resolvers) => {
   const app = express();
   const httpServer = http.createServer(app);
   const server = new ApolloServer({
     typeDefs,
     resolvers,
+    context: async ({ req }) => {
+      const token = req.headers.authorization || "";
+      const user = await getUser(token);
+      return { user, pool };
+    },
     plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
   });
   await server.start();
@@ -23,6 +30,6 @@ async function startApolloServer(typeDefs, resolvers) {
   console.log(
     `🚀 Server ready at http://localhost:${process.env.PORT}${server.graphqlPath}`
   );
-}
+};
 
 startApolloServer(typeDefs, resolvers);
