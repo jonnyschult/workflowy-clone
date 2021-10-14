@@ -21,19 +21,47 @@ const createDB = async (user, password) => {
   await client.end();
   console.log("Done creating Database");
   console.log("Creating tables...");
-  const userResult = await pool.query(
-    "CREATE TABLE user_account(id VARCHAR(36) NOT NULL, email varchar(50) NOT NULL UNIQUE, first_name varchar(30) NOT NULL, last_name varchar(30) NOT NULL, passwordhash varchar(300) NOT NULL, created_at varchar(15) NOT NULL, updated_at varchar(15) NOT NULL, PRIMARY KEY (id))"
+  await pool.query(
+    `CREATE TABLE user_account(
+    id VARCHAR(36) NOT NULL, 
+    email varchar(50) NOT NULL UNIQUE,
+    first_name varchar(30) NOT NULL,
+    last_name varchar(30) NOT NULL,
+    passwordhash varchar(300) NOT NULL,
+    created_at VARCHAR(17) NOT NULL DEFAULT EXTRACT(epoch FROM now()),
+    updated_at VARCHAR(17) NOT NULL DEFAULT EXTRACT(epoch FROM now()),
+    PRIMARY KEY (id)
+);`
   );
-  console.log(userResult);
-  const tasksResuts = await pool.query(
-    "CREATE TABLE task(id  VARCHAR(36) NOT NULL, text TEXT NOT NULL, parent_id VARCHAR(36), priority INT DEFAULT 0, is_finished BOOLEAN, created_at varchar(15) NOT NULL, updated_at varchar(15) NOT NULL, PRIMARY KEY (id), FOREIGN KEY (parent_id) REFERENCES task(id) );"
+  console.log("user_account table created.");
+  await pool.query(
+    `
+    CREATE TABLE task(
+    id VARCHAR(36) NOT NULL,
+    text TEXT NOT NULL,
+    parent_id VARCHAR(36),
+    priority INT DEFAULT 0,
+    is_finished BOOLEAN,
+    owner_id VARCHAR(36) REFERENCES user_account(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    created_at VARCHAR(17) NOT NULL DEFAULT EXTRACT(epoch FROM now()),
+    updated_at VARCHAR(17) NOT NULL DEFAULT EXTRACT(epoch FROM now()),
+    PRIMARY KEY (id),
+    FOREIGN KEY (parent_id) REFERENCES task(id) ON DELETE CASCADE
+);
+`
   );
-  console.log(tasksResuts);
-  const user_task_results = await pool.query(
-    "CREATE TABLE user_task( user_id VARCHAR(36) NOT NULL, task_id VARCHAR(36) NOT NULL, owner_id VARCHAR(36) NOT NULL, CONSTRAINT user_task_pkey PRIMARY KEY (user_id, task_id));"
+  console.log("task table created");
+
+  await pool.query(
+    `CREATE TABLE user_task(
+    user_id VARCHAR(36) REFERENCES user_account (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    task_id VARCHAR(36) REFERENCES task (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT user_task_pkey PRIMARY KEY (user_id, task_id)
+);`
   );
-  console.log(user_task_results);
+  console.log("user_task table created.");
   console.log("Done creating tables.");
+  return;
 };
 
 if (module === require.main) {
