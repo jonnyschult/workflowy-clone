@@ -94,7 +94,7 @@ const getQueryArgs = (queryType, table, info) => {
       }
     }
 
-    let queryString = `DELETE FROM ${table} WHERE ${wheres}`;
+    let queryString = `DELETE FROM ${table} WHERE ${wheres} RETURNING *`;
     return [queryString, valArray];
   }
 

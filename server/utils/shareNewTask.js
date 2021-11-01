@@ -1,19 +1,22 @@
 const getQueryArgs = require("./getQueryArgs");
-const shareNewTask = async ({ pool, root_task_id, new_task_id }) => {
+const shareNewTask = async ({ pool, rootTaskId, newTaskId }) => {
   try {
     const [selectQueryString, selectValArray] = getQueryArgs(
       "select",
       "user_task",
-      { task_id: root_task_id }
+      { task_id: rootTaskId }
     );
     const results = await pool.query(selectQueryString, selectValArray);
+    const updatedShared = [];
     const ids = results.rows.map((item) => item.user_id);
-    for (let i = 0; i < ids.length; i++) {
-      await pool.query(
+    ids.forEach((id) => {
+      const res = pool.query(
         "INSERT INTO user_task (user_id, task_id) VALUES($1, $2);",
-        [ids[i], new_task_id]
+        [id, newTaskId]
       );
-    }
+      updatedShared.push(res.rows[0]);
+    });
+    await Promise.all(updatedShared);
     return true;
   } catch (error) {
     console.log(error);

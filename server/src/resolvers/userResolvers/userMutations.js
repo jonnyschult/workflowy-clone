@@ -23,15 +23,16 @@ const register = async (_, args, context) => {
     });
     return {
       success: true,
-      message: "User created!",
+      message: "Account created!",
       token,
+      user: results.rows[0],
     };
   } catch (error) {
     console.log(error);
     return {
       success: false,
-      message: "query failed",
-      task: [],
+      message: error,
+      token,
     };
   }
 };

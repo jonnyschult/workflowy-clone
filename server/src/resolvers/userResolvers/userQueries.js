@@ -9,6 +9,7 @@ const login = async (_, args) => {
     const [queryString, valArray] = getQueryArgs("select", "user_account", {
       email,
     });
+    console.log("password", password);
     const results = await pool.query(queryString, valArray);
     if (results.rowCount === 0) {
       throw "No user found with that email.";
@@ -42,9 +43,34 @@ const login = async (_, args) => {
   }
 };
 
+const getUser = async (_, __, context) => {
+  try {
+    const { user } = context;
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
+
+    return {
+      success: true,
+      message: "Success. You are now logged in.",
+      user,
+      token,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: error,
+      user: null,
+      token: null,
+    };
+  }
+};
+
 const userQueries = {
   Query: {
     login,
+    getUser,
   },
 };
 

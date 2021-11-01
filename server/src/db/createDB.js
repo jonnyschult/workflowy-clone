@@ -40,7 +40,7 @@ const createDB = async (user, password) => {
     id VARCHAR(36) NOT NULL,
     text TEXT NOT NULL,
     parent_id VARCHAR(36),
-    priority INT DEFAULT 0,
+    position INT DEFAULT 0,
     is_finished BOOLEAN,
     owner_id VARCHAR(36) REFERENCES user_account(id) ON UPDATE CASCADE ON DELETE CASCADE,
     created_at VARCHAR(17) NOT NULL DEFAULT EXTRACT(epoch FROM now()),

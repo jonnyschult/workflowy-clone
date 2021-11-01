@@ -6,14 +6,14 @@ const users = [
     email: "test@test.com",
     first_name: "Dante",
     last_name: "Alighieri",
-    passwordhash: bcrypt.hashSync("DolceStilNovo", 10),
+    passwordhash: bcrypt.hashSync("testpass", 10),
   },
   {
     id: "78103b07-b619-487d-847f-db0f46ba56be",
     email: "test2@test.com",
     first_name: "Virgil",
     last_name: "Maro",
-    passwordhash: bcrypt.hashSync("TheRoman", 10),
+    passwordhash: bcrypt.hashSync("testpass", 10),
   },
 ];
 
@@ -24,7 +24,7 @@ const tasks = [
     parent_id: null,
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 0,
   },
   {
     id: "8ea5dfe7-cb7c-48d2-8020-c8826de87a65",
@@ -32,7 +32,7 @@ const tasks = [
     parent_id: null,
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 1,
   },
   {
     id: "c41d7e41-be33-4a66-a41f-3fbebaf11e53",
@@ -40,7 +40,7 @@ const tasks = [
     parent_id: "8ea5dfe7-cb7c-48d2-8020-c8826de87a65",
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 0,
   },
   {
     id: "0ce555ac-b858-404e-94d6-401eaa3f12fe",
@@ -48,7 +48,7 @@ const tasks = [
     parent_id: "8ea5dfe7-cb7c-48d2-8020-c8826de87a65",
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 1,
   },
   {
     id: "a235e2e2-6777-4e8a-a3bf-7d14d6ce79c8",
@@ -56,7 +56,7 @@ const tasks = [
     parent_id: "0ce555ac-b858-404e-94d6-401eaa3f12fe",
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 0,
   },
   {
     id: "066d41f6-3d2d-4a51-b626-141f77345fe7",
@@ -64,7 +64,7 @@ const tasks = [
     parent_id: "0ce555ac-b858-404e-94d6-401eaa3f12fe",
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 1,
   },
   {
     id: "2322116f-fbd3-4fa7-b529-afc959fc065f",
@@ -72,7 +72,7 @@ const tasks = [
     parent_id: "066d41f6-3d2d-4a51-b626-141f77345fe7",
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 0,
   },
   {
     id: "5f7a095d-6951-4462-93c0-4ca37faf2920",
@@ -80,7 +80,7 @@ const tasks = [
     parent_id: "066d41f6-3d2d-4a51-b626-141f77345fe7",
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 1,
   },
   {
     id: "8c990091-5096-4dab-b38c-d3ff863ab56b",
@@ -88,7 +88,7 @@ const tasks = [
     parent_id: "5f7a095d-6951-4462-93c0-4ca37faf2920",
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 0,
   },
   {
     id: "627d47b0-7d2f-4995-a0d9-26c8af1600f3",
@@ -96,7 +96,7 @@ const tasks = [
     parent_id: "5f7a095d-6951-4462-93c0-4ca37faf2920",
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 1,
   },
   {
     id: "13ec4cc6-1ef3-448d-9a4c-47849702a1df",
@@ -104,7 +104,7 @@ const tasks = [
     parent_id: "627d47b0-7d2f-4995-a0d9-26c8af1600f3",
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 0,
   },
   {
     id: "23afdf4b-3f76-4458-b639-0d1cefedfce8",
@@ -112,7 +112,7 @@ const tasks = [
     parent_id: "627d47b0-7d2f-4995-a0d9-26c8af1600f3",
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 1,
   },
   {
     id: "4e28ff07-a25f-4c66-8284-b72625335ae0",
@@ -120,7 +120,7 @@ const tasks = [
     parent_id: "23afdf4b-3f76-4458-b639-0d1cefedfce8",
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 0,
   },
   {
     id: "e329b64c-16f0-4219-989b-92449b39067a",
@@ -128,7 +128,7 @@ const tasks = [
     parent_id: "23afdf4b-3f76-4458-b639-0d1cefedfce8",
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 1,
   },
   {
     id: "8fa95676-7a30-4ea7-8cfe-8e45733ba908",
@@ -136,7 +136,7 @@ const tasks = [
     parent_id: "e329b64c-16f0-4219-989b-92449b39067a",
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 0,
   },
   {
     id: "1504a549-8d8b-42c7-b44d-5976d4e37eed",
@@ -144,7 +144,7 @@ const tasks = [
     parent_id: "e329b64c-16f0-4219-989b-92449b39067a",
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 1,
   },
   {
     id: "cf721e11-dfbc-4875-af27-fda20898b80e",
@@ -152,7 +152,7 @@ const tasks = [
     parent_id: "1504a549-8d8b-42c7-b44d-5976d4e37eed",
     owner_id: "b83f5df1-c8c1-4286-8533-95df7e387ea4",
     is_finished: false,
-    priority: 0,
+    position: 0,
   },
 ];
 

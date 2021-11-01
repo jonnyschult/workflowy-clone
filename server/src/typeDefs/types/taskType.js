@@ -5,8 +5,11 @@ const taskType = gql`
     id: String
     text: String
     parent_id: String
-    priority: Int
+    owner_id: String
+    position: Int
     is_finished: Boolean
+    updated_at: String
+    created_at: String
   }
 
   input CreateUserInput {
@@ -14,6 +17,14 @@ const taskType = gql`
     last_name: String
     email: String
     password: String
+  }
+
+  input ReorderTasksInput {
+    id: String
+    oldPosition: Int
+    oldParentId: String
+    newPosition: Int
+    newParentId: String
   }
 
   type User {
@@ -28,9 +39,9 @@ const taskType = gql`
 
   type Task {
     id: String
-    text: String!
+    text: String
     parent_id: String
-    priority: Int
+    position: Int
     is_finished: Boolean
     owner_id: String
     created_at: String
@@ -41,12 +52,14 @@ const taskType = gql`
     success: Boolean!
     message: String
     tasks: [Task]
+    updatedPeerTasks: [Task]
   }
 
   type CreateUserResponse {
     success: Boolean!
     message: String
     token: String
+    user: User
   }
 
   type LoginResponse {
