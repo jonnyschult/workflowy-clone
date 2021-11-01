@@ -18,7 +18,7 @@ const App: React.FC = () => {
     onError(error) {
       console.log("Error in getTasks", error);
     },
-    // fetchPolicy: "network-only",
+    fetchPolicy: "network-only",
   });
 
   const getUser = useQuery(GET_USER, {
