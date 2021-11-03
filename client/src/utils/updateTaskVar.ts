@@ -32,7 +32,6 @@ const updateVar = ({ key, task, secondTask, text }: updateVarParams) => {
     //resets position for the tasks as it jumps levels
     const newParent = secondTask;
     return tasks.map((t) => {
-      console.log("Sorting it");
       if (t.id === task.id) {
         t.parent_id = newParent!.id!;
         t.position = 0;

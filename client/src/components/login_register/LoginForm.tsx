@@ -18,7 +18,6 @@ const Login: React.FC<LoginProps> = (props) => {
       password,
     },
     onCompleted(data) {
-      console.log(data);
       props.loginHandler(data.login.user, data.login.token);
     },
     onError(error) {
@@ -33,7 +32,6 @@ const Login: React.FC<LoginProps> = (props) => {
         if (password.length >= 8) {
           login();
         } else {
-          console.log(password.length);
           setMessage("Your password must be at least 8 characters.");
           setTimeout(() => {
             setMessage("");

@@ -9,7 +9,6 @@ const login = async (_, args) => {
     const [queryString, valArray] = getQueryArgs("select", "user_account", {
       email,
     });
-    console.log("password", password);
     const results = await pool.query(queryString, valArray);
     if (results.rowCount === 0) {
       throw "No user found with that email.";

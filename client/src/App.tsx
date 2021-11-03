@@ -24,7 +24,6 @@ const App: React.FC = () => {
   const getUser = useQuery(GET_USER, {
     onCompleted(data) {
       userVar(data.getUser.user);
-      console.log("GetUserFired");
       getTasks();
     },
     onError(error) {

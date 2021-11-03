@@ -7,7 +7,6 @@ const createTask = async (_, args, context) => {
       throw "You must be logged in to perform this action";
     }
     const { task, rootTaskId } = args;
-    console.log("Creating...", task);
     task.owner_id = user.id;
     const [queryString, valArray] = getQueryArgs("insert", "task", task);
     const results = await pool.query(queryString, valArray);
@@ -68,7 +67,6 @@ const updateTask = async (_, args, context) => {
   try {
     const { user, pool } = context;
     const { task } = args;
-    console.log(task);
     if (user === null) {
       throw "You must be logged in to perform this action";
     }
@@ -168,8 +166,6 @@ const shareTask = async (_, args, context) => {
     const userResults = await pool.query(selectUserString, selectUserArray);
     const recipient = userResults.rows[0];
 
-    console.log(recipient);
-
     if (recipient === undefined) {
       throw "There is no user with that email.";
     }
@@ -220,7 +216,6 @@ const deleteTask = async (_, args, context) => {
   try {
     const { user, pool } = context;
     const { task } = args;
-    console.log(task.id);
 
     if (user === null) {
       throw "You must be logged in to perform this action";
@@ -279,7 +274,6 @@ const deleteTask = async (_, args, context) => {
 };
 
 const reorderTasks = async (_, args, context) => {
-  console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
   try {
     const { user, pool } = context;
     const { id, oldPosition, oldParentId, newPosition, newParentId } =

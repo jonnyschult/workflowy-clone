@@ -94,7 +94,6 @@ const Tasks: React.FC<TasksProps> = (props: TasksProps) => {
                       <span
                         style={{ cursor: "pointer" }}
                         onClick={() => {
-                          console.log(isOpen.length);
                           setIsOpen(
                             isOpen.map((bool, j) => (j === i ? !bool : bool))
                           );

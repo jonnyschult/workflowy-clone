@@ -91,7 +91,6 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
 
   const handleEnter = (el: HTMLElement) => {
     //Get's the caret position and splits the text on that position.
-    console.log(tasks);
     const index = window.getSelection()?.getRangeAt(0).startOffset;
     const [firstHalfText, secondHalfText] = [
       el.innerText.slice(0, index),
@@ -158,18 +157,11 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
   };
 
   const handleTab = (el: HTMLElement) => {
-    console.log("handleTab fired");
     const newParent = tasks.filter(
       (t) => t.parent_id === task.parent_id && t.position + 1 === task.position
     )[0];
     if (newParent) {
       tasksVar(updateVar({ key: "tab", task, secondTask: newParent }));
-      console.log(
-        tasksVar()
-          .filter((t) => t.parent_id === task.parent_id)
-          .map((t) => t.position)
-          .sort((a, b) => a - b)
-      );
       reorderTasks({
         variables: {
           reorderTasksInput: {
@@ -215,12 +207,6 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
     const newPeer = tasks.filter((t) => t.id === task.parent_id)[0];
     if (newPeer) {
       tasksVar(updateVar({ key: "unTab", task, secondTask: newPeer }));
-      console.log(
-        tasksVar()
-          .filter((t) => t.parent_id === task.parent_id)
-          .map((t) => t.position)
-          .sort((a, b) => a - b)
-      );
       reorderTasks({
         variables: {
           reorderTasksInput: {
@@ -269,7 +255,6 @@ const TaskItem: React.FC<TaskItemProps> = (props) => {
       clearTimeout(timeOutVal);
     }
     lastEditedId = task.id!;
-    console.log("Updating task", el.innerText, task);
     tasksVar(updateVar({ key: "inputText", task, text: el.innerText }));
     timeOutVal = setTimeout(() => {
       updateTask({
